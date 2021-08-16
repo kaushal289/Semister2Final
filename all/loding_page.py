@@ -23,12 +23,9 @@ class Loading:
         else:
             self.root.destroy()
             login_page.Login()
-
-
 def startmusic():
     time.sleep(0.5)
     playsound('coffee1.mp3')
-
 def startthreads():
     thread1=threading.Thread(target=startmusic)
     thread1.start()

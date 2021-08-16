@@ -196,7 +196,7 @@ class CustomBurger:
             if self.pi==-1:
                 try:
                     if self.num_ch > self.num_pi:
-                        self.num_ch = self.num_ch - 1
+                        self.num_ch =self.num_ch - 1
                         self.a = self.a + 40
                         self.login5 = ImageTk.PhotoImage(Image.open(f'chicken_img/6.png'))
                         self.my_canvas.create_image(self.b, self.a, image=self.login5, anchor="nw")

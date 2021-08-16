@@ -1,6 +1,5 @@
 from tkinter import *
 from PIL import ImageTk, Image
-from time import sleep
 
 
 class MainPage:
@@ -10,32 +9,28 @@ class MainPage:
         self.root.state('zoomed')
         self.my_canvas = Canvas(self.root)
         self.my_canvas.pack(fill="both", expand=True)
-
         self.background = ImageTk.PhotoImage(Image.open('background.png'))
         self.my_canvas.create_image(0, 0, image=self.background, anchor="nw")
-        self.ace_images()
+        self.images('ace_logo','ace','ace1','ace2','ace3',10,10)
+        self.images('room','room1', 'room2', 'room3', 'room4', 200, 10)
         self.buttons()
         self.menu_main_frame()
-
-        self.root.update()
-
         self.root.mainloop()
-    def ace_images(self):
+    def images(self,file_name,img1,img2,img3,img4,x,y):
         # now set an image for moving
-        self.img1 = ImageTk.PhotoImage(Image.open(f"ace_logo/ace.png"))  # make sure that you have a photo
+        self.img1 = ImageTk.PhotoImage(Image.open(f"{file_name}/{img1}.png"))  # make sure that you have a photo
         # in you current folder that you are working with
-        self.img2 = ImageTk.PhotoImage(Image.open(f"ace_logo/ace1.png"))
-        self.img3 = ImageTk.PhotoImage(Image.open(f"ace_logo/ace2.png"))
-        self.img4 = ImageTk.PhotoImage(Image.open(f"ace_logo/ace3.png"))
+        self.img2 = ImageTk.PhotoImage(Image.open(f"{file_name}/{img2}.png"))
+        self.img3 = ImageTk.PhotoImage(Image.open(f"{file_name}/{img3}.png"))
+        self.img4 = ImageTk.PhotoImage(Image.open(f"{file_name}/{img4}.png"))
         # Create a label
         self.l = Label(self.root, font="bold")
-        self.l.place(x=20, y=0)
+        self.l.place(x=x, y=y)
         # take a variable
         self.x = 1
-        self.ace_move()
+        self.move()
 
-
-    def ace_move(self):
+    def move(self):
         if self.x == 5:
             self.x = 1
         if self.x == 1:
@@ -50,12 +45,8 @@ class MainPage:
         # now increase the count by one
         self.x += 1
         # set images to work automatically by "after" feature in tkinter
-        self.root.after(1500, self.ace_move)
-
-
-
+        self.root.after(2000, self.move)
     def buttons(self):
-
         self.menu_img = ImageTk.PhotoImage(Image.open('menu.png'))
         self.menu_change_img = ImageTk.PhotoImage(Image.open('menu_change.png'))
         self.details_img= ImageTk.PhotoImage(Image.open('details.png'))
@@ -100,82 +91,32 @@ class MainPage:
 
 
     def menu_main_frame(self):
-        self.menu_btn.config(image=self.menu_change_img, fg='green')
-        self.details_btn.config(image=self.details_img, fg='white')
-        self.about_btn.config(image=self.about_img, fg='white')
-        self.profile_btn.config(image=self.profile_img, fg='white')
-        self.setting_btn.config(image=self.setting_img, fg='white')
-
-
-
-        self.frame_main = LabelFrame(self.root, height=550, width=1040, borderwidth=10)
+        self.name_fn='menu'
+        self.frame_main = LabelFrame(self.root, height=550, width=1050, borderwidth=10)
         self.frame_main.place(x=300, y=130)
         self.frame_main.pack_propagate(False)
+        self.menu_sub_frame(0, 0, 0)
+        self.inside_menu_sub_frame(0)
+        self.menu_sub_frame(345, 0, 1)
+        self.inside_menu_sub_frame(1)
+        self.menu_sub_frame(690, 0, 2)
+        self.inside_menu_sub_frame(2)
+        self.img_change()
 
-
-
-
-
-
-        self.frame_room = LabelFrame(self.frame_main, height=530, width=340, borderwidth=10)
-        self.frame_room.place(x=0, y=0)
-        self.frame_room.pack_propagate(False)
-        self.my_canvas_room = Canvas(self.frame_room)
-        self.my_canvas_room.pack(fill="both", expand=True)
-        self.room_close = ImageTk.PhotoImage(Image.open(f'room/room1.png'))
-        self.my_canvas_room.create_image(60, 300, image=self.room_close, anchor="nw")
-        self.frame_room.bind("<Enter>", self.change_room)
-        self.frame_room.bind("<Leave>", self.change_back_room)
-        self.topic_room = Label(self.frame_room, text='ROOM', font=("Algerian", 40, 'bold'))
-        self.topic_room.place(x=90, y=5)
-
-
-        self.frame_food = LabelFrame(self.frame_main, height=530, width=340, borderwidth=10)
-        self.frame_food.place(x=340, y=0)
-        self.frame_food.pack_propagate(False)
-        self.my_canvas_food = Canvas(self.frame_food)
-        self.my_canvas_food.pack(fill="both", expand=True)
-        self.food_close = ImageTk.PhotoImage(Image.open(f'food/food1.png'))
-        self.my_canvas_food.create_image(75, 320, image=self.food_close, anchor="nw")
-        self.frame_food.bind("<Enter>", self.change_food)
-        self.frame_food.bind("<Leave>", self.change_back_food)
-        self.topic_food = Label(self.frame_food, text='FOOD', font=("Algerian", 40, 'bold'))
-        self.topic_food.place(x=90, y=5)
-
-
-        self.frame_cab = LabelFrame(self.frame_main, height=530, width=340, borderwidth=10)
-        self.frame_cab.place(x=680, y=0)
-        self.frame_cab.pack_propagate(False)
-        self.my_canvas_cab = Canvas(self.frame_cab)
-        self.my_canvas_cab.pack(fill="both", expand=True)
-        self.cab_close = ImageTk.PhotoImage(Image.open(f'cab/cab1.png'))
-        self.my_canvas_cab.create_image(75, 320, image=self.cab_close, anchor="nw")
-        self.frame_cab.bind("<Enter>", self.change_cab)
-        self.frame_cab.bind("<Leave>", self.change_back_cab)
-        self.topic_cab = Label(self.frame_cab, text='CAB \nSERVICE', font=("Algerian", 40, 'bold'))
-        self.topic_cab.place(x=50, y=5)
-
-
-
-    def change_room(self,e):
-        self.animation('room','room',60,300,self.my_canvas_room)
-    def change_back_room(self,e):
-        self.room_close = ImageTk.PhotoImage(Image.open(f'room/room1.png'))
-        self.my_canvas_room.create_image(60, 300, image=self.room_close, anchor="nw")
-    def change_food(self,f):
-        self.animation('food','food',75,320,self.my_canvas_food)
-    def change_back_food(self,f):
-        self.food_close = ImageTk.PhotoImage(Image.open(f'food/food1.png'))
-        self.my_canvas_food.create_image(75, 320, image=self.food_close, anchor="nw")
-    def change_cab(self,g):
-        self.animation('cab','cab',75,320,self.my_canvas_cab)
-    def change_back_cab(self,g):
-        self.cab_close = ImageTk.PhotoImage(Image.open(f'cab/cab1.png'))
-        self.my_canvas_cab.create_image(75, 320, image=self.cab_close, anchor="nw")
-
-
-
-
+    def menu_sub_frame(self,x,y,num):
+        self.frame=['self.frame1','self.frame2','self.frame3']
+        self.frame[num] = LabelFrame(self.frame_main, height=530, width=340,borderwidth=10)
+        self.frame[num].place(x=x,y=y)
+        self.frame[num].pack_propagate(False)
+    def inside_menu_sub_frame(self,num):
+        self.my_canvas1 = Canvas(self.frame[num])
+        self.my_canvas1.pack(fill="both", expand=True)
+        if num==0:
+            self.my_canvas1.create_text(150,30,text='ROOM',font=("Algerian", 40,'bold'))
+        elif num==1:
+            self.my_canvas1.create_text(150, 30, text='FOOD',font=("Algerian", 40,'bold'))
+        else:
+            self.my_canvas1.create_text(150, 30, text='PICK UP',font=("Algerian", 40,'bold'))
     def fn_details(self):
         self.frame_details = LabelFrame(self.root, height=550, width=1050, borderwidth=10)
         self.frame_details.place(x=300, y=130)
@@ -224,24 +165,18 @@ class MainPage:
             self.about_btn.config(image=self.about_img, fg='white')
             self.profile_btn.config(image=self.profile_img, fg='white')
             self.setting_btn.config(image=self.setting_img, fg='white')
-
-
         elif self.name_fn=='about':
             self.menu_btn.config(image=self.menu_img, fg='white')
             self.details_btn.config(image=self.details_img,fg='white')
             self.about_btn.config(image=self.about_change_img, fg='green')
             self.profile_btn.config(image=self.profile_img, fg='white')
             self.setting_btn.config(image=self.setting_img, fg='white')
-
-            self.frame_main.place_forget()
         elif self.name_fn=='profile':
             self.menu_btn.config(image=self.menu_img, fg='white')
             self.details_btn.config(image=self.details_img,fg='white')
             self.about_btn.config(image=self.about_img, fg='white')
             self.profile_btn.config(image=self.profile_change_img, fg='green')
             self.setting_btn.config(image=self.setting_img, fg='white')
-
-            self.frame_main.place_forget()
         else:
             self.menu_btn.config(image=self.menu_img, fg='white')
             self.details_btn.config(image=self.details_img, fg='white')
@@ -249,12 +184,4 @@ class MainPage:
             self.profile_btn.config(image=self.profile_img, fg='white')
             self.setting_btn.config(image=self.setting_change_img, fg='green')
 
-            self.frame_main.place_forget()
-
-    def animation(self,name,type,x,y,any):
-        for i in range(1, 5):
-            self.room_img = ImageTk.PhotoImage(Image.open(f'{name}/{type}{i}.png'))
-            any.create_image(x, y, image=self.room_img, anchor="nw")
-            sleep(0.1)
-            self.root.update_idletasks()
 MainPage()

@@ -1,83 +1,156 @@
 from tkinter import *
-from PIL import ImageTk, Image
+from PIL import Image,ImageTk
+from tkinter import ttk
+from tkinter import messagebox
+import mysql.connector
+import login_page
 
-class Registration:
-    def __init__(self):
-        self.root = Tk()
-        self.root.title("Login")
-        self.root.state('zoomed')
-        self.my_canvas = Canvas(self.root)
-        self.my_canvas.pack(fill="both", expand=True)
-        self.background = PhotoImage(file='registration.png')
-        self.my_canvas.create_image(0, 0, image=self.background, anchor="nw")
-        self.fn_frame()
-        self.root.mainloop()
-    def fn_frame(self):
-        self.frame= LabelFrame(self.root, height=500, width=300, borderwidth=10,bg='purple')
-        self.frame.place(x=300, y=130)
-        self.frame.pack_propagate(False)
-        self.buttons()
+class Register:
+    def __init__(self,master):
+        self.root2=master
+        self.root2.title("registration form")
+        self.root2.state('zoomed')
 
-    def buttons(self):
-        register_name = Label(self.frame, text="Registration", font=('Times New Roman', 20, "bold"), bg="white")
-        register_name.place(x=0, y=140)
-        offer = Label(self.frame, text="(Register and get exciting offer)", font=('Times New Roman', 12), bg="white")
-        offer.place(x=625, y=175)
+        self.load=Image.open('registration.png')
+        self.bg=ImageTk.PhotoImage(self.load,master=self.root2)
+        self.lbl=Label(self.root2,image=self.bg).place(x=0,y=0,relwidth=1,relheight=1)
 
-        user_name_label = Label(self.frame, text="User Name", font=('Times New Roman', 13), bg="white")
-        user_name_label.place(x=600, y=198)
+        self.left=Image.open('sd.png')
+        self.lg=ImageTk.PhotoImage(self.left,master=self.root2)
+        self.lbl1=Label(self.root2,image=self.lg).place(x=200,y=150,width=425,height=600)
 
-        gender_label = Label(self.frame, text="Gender", font=('Times New Roman', 13), bg="white")
-        gender_label.place(x=600, y=228)
+        frame1= Frame(self.root2,bg='white')
+        frame1.place(x=625,y=150,width=700,height=600)
 
-        district_label = Label(self.frame, text="District", font=('Times New Roman', 13), bg="white")
-        district_label.place(x=600, y=258)
+        title=Label(frame1,text='REGISTER HERE',font=("times new roman",30,'bold'),bg='white',fg='#65178a').place(x=50,y=30)
 
-        address_label = Label(self.frame, text="Address", font=('Times New Roman', 13), bg="white")
-        address_label.place(x=600, y=288)
+        #entry fields
 
-        email_label = Label(self.frame, text="Email", font=('Times New Roman', 13), bg="white")
-        email_label.place(x=600, y=318)
+        fname= Label(frame1, text='First Name', font=("times new roman", 15, 'bold'), bg='white',
+                      fg='#51375d').place(x=50, y=100)
+        self.txt_fname=Entry(frame1,font=("times new roman",15),bg='#bcb5c0')
+        self.txt_fname.place(x=50,y=130,width=250)
 
-        password_label = Label(self.frame, text="Set password", font=('Times New Roman', 13), bg="white")
-        password_label.place(x=600, y=348)
+        lname= Label(frame1, text='Last Name', font=("times new roman", 15, 'bold'), bg='white',
+                      fg='#51375d').place(x=370, y=100)
+        self.txt_lname=Entry(frame1,font=("times new roman",15),bg='#bcb5c0')
+        self.txt_lname.place(x=370,y=130,width=250)
 
-        # create text box
+        contact= Label(frame1, text='Contact Number', font=("times new roman", 15, 'bold'), bg='white',
+                      fg='#51375d').place(x=50, y=160)
+        self.txt_contact=Entry(frame1,font=("times new roman",15),bg='#bcb5c0')
+        self.txt_contact.place(x=50,y=190,width=250)
 
-        user_name = Entry(self.frame, text="", width=16, font=('Times New Roman', 13))
-        user_name.place(x=695, y=198)
+        email= Label(frame1, text='Username', font=("times new roman", 15, 'bold'), bg='white',
+                      fg='#51375d').place(x=370, y=160)
+        self.txt_email=Entry(frame1,font=("times new roman",15),bg='#bcb5c0')
+        self.txt_email.place(x=370,y=190,width=250)
 
-        var = StringVar()
-        var.set("4")
-        radio1 = Radiobutton(self.frame, text="Male", variable=var, value="1", bg="white").place(x=670, y=228)
-        radio2 = Radiobutton(self.frame, text="Female", variable=var, value="2", bg="white").place(x=725, y=228)
-        radio3 = Radiobutton(self.frame, text="Other", variable=var, value="3", bg="white").place(x=790, y=228)
+        gender=Label(frame1, text='Gender', font=("times new roman", 15, 'bold'), bg='white',
+              fg='#51375d').place(x=50, y=220)
+        self.gender = ttk.Combobox(frame1, font=("times new roman", 12), state='readonly', justify=CENTER)
+        self.gender['values'] = ('Select', 'Male', 'Female','non_binary')
+        self.gender.place(x=50, y=250, width=250)
+        self.gender.current(0)
 
-        district_list = ['Kathmandu', 'Pokhara', 'Biratnagar', 'Kavre', 'Dhankuta', 'other']
-        car = StringVar()
-        car.set('Select District')
-        droplist = OptionMenu(self.frame, car, *district_list)
-        droplist.config(width=15, bg="white", font=('Times New Roman', 11), borderwidth=0)
+        age= Label(frame1, text='Age', font=("times new roman", 15, 'bold'), bg='white',
+                      fg='#51375d').place(x=370, y=220)
+        self.txt_age=Entry(frame1,font=("times new roman",15),bg='#bcb5c0')
+        self.txt_age.place(x=370,y=250,width=250)
 
-        droplist.place(x=695, y=258)
+        password= Label(frame1, text='Password', font=("times new roman", 15, 'bold'), bg='white',
+                      fg='#51375d').place(x=50, y=280)
+        self.txt_password=Entry(frame1,font=("times new roman",15),bg='#bcb5c0',show="*")
+        self.txt_password.place(x=50,y=310,width=250)
+        confirm_password= Label(frame1, text='Confirm password', font=("times new roman", 15, 'bold'), bg='white',
+                      fg='#51375d').place(x=370, y=280)
+        self.txt_confirm_password=Entry(frame1,font=("times new roman",15),bg='#bcb5c0',show='*')
+        self.txt_confirm_password.place(x=370,y=310,width=250)
 
-        address = Entry(self.frame, width=16, font=('Times New Roman', 13))
-        address.place(x=695, y=288)
+        question= Label(frame1, text='Security Question', font=("times new roman", 15, 'bold'), bg='white',
+                      fg='#51375d').place(x=50, y=340)
+        self.cmb_question=ttk.Combobox(frame1,font=("times new roman",12),state='readonly',justify=CENTER)
+        self.cmb_question['values']=('Select','In what city were you born?','What is your bestfriends name?',
+                                'What was your favorite food as a child?')
+        self.cmb_question.place(x=50,y=370,width=250)
+        self.cmb_question.current(0)
 
-        email = Entry(self.frame, width=16, font=('Times New Roman', 13))
-        email.place(x=695, y=318)
+        answer= Label(frame1, text='Answer', font=("times new roman", 15, 'bold'), bg='white',
+                      fg='#51375d').place(x=370, y=340)
+        self.txt_answer=Entry(frame1,font=("times new roman",15),bg='#bcb5c0')
+        self.txt_answer.place(x=370,y=370,width=250)
 
-        password = Entry(self.frame, width=16, font=('Times New Roman', 13), show="*")
-        password.place(x=695, y=348)
+        self.terms_chk=IntVar()
+        terms=Checkbutton(frame1,text='I Agree To The Terms and Conditions',variable=self.terms_chk,onvalue=1,offvalue=0,bg='white').place(x=50, y=420)
 
-        var123 = StringVar()
-        agreement = Checkbutton(self.frame, text="I agree the terms and conditions.", font=('Times New Roman', 12, "bold"),
-                                variable=var123, onvalue="on", offvalue="off", bg="white")
-        agreement.deselect()
-        agreement.place(x=600, y=370)
-        # create submit button
 
-        submit_btn = Button(self.frame, text="Register", bg="white", font=('Times New Roman', 15, "bold"),
-                     compound=CENTER, borderwidth=0)
-        submit_btn.place(x=660, y=395)
-Registration()
+        register_btn=Button(frame1,text="  Register  ",bg='#9a90e4',command=self.register_data).place(x=50,y=500,width=250)
+        login_btn=Button(frame1,text="   Login  ",bg='#9a90e4',command=self.login_window).place(x=370,y=500,width=250)
+        self.root2.mainloop()
+    def clear_data(self):
+        self.txt_fname.delete(0,END)
+        self.txt_lname.delete(0, END)
+        self.txt_contact.delete(0, END)
+        self.txt_email.delete(0, END)
+        self.txt_age.delete(0, END)
+        self.txt_password.delete(0, END)
+        self.txt_confirm_password.delete(0, END)
+        self.cmb_question.set("Select")
+        self.txt_answer.delete(0, END)
+        self.gender.set("Select")
+
+
+    def register_data(self):
+        print(self.terms_chk.get())
+        if self.txt_fname.get()=="" or self.txt_lname.get()=="" or self.txt_contact.get()==""or self.txt_email.get()==""or self.txt_age.get()==""or self.gender.get()==""or self.cmb_question.get()=='Select'or self.txt_password.get()==""or self.txt_confirm_password.get()=="":
+            messagebox.showerror("Error","All fields are required",parent=self.root2)
+        elif self.txt_password.get()!= self.txt_confirm_password.get():
+            messagebox.showerror("Error","password and confirm password doesn't match",parent=self.root2)
+        elif self.terms_chk.get()==0:
+            print(self.terms_chk.get())
+            messagebox.showerror("Error","please agree to the terms and conditions",parent=self.root2)
+        elif self.txt_contact.get() is StringVar:
+            messagebox.showerror("Error","Enter the correct contact number")
+        elif len(self.txt_contact.get())!=10:
+            messagebox.showerror("Error","Contact number should be 10 digit")
+        else:
+            try:
+                con= mysql.connector.connect(
+                    host='127.0.0.1',
+                    user='root',
+                    password='1235',
+                    port=3306,
+                    database='login_registration')
+                cur=con.cursor()
+
+                fname=self.txt_fname.get()
+                lname=self.txt_lname.get()
+                contact_number=self.txt_contact.get()
+                email=self.txt_email.get()
+                gender=self.gender.get()
+                age=self.txt_age.get()
+                password=self.txt_password.get()
+                security_question=self.cmb_question.get()
+                answer=self.txt_answer.get()
+
+
+                sql="insert into registration(fname,lname,contact_number,email,gender,age,password,security_question,answer) " \
+                    "values('"+fname+"','"+lname+"',"+contact_number+",'"+email+"','"+gender+"',"+age+",'"+password+"','"+security_question+"','"+answer+"')"
+
+                values=cur.execute(sql)
+
+                con.commit()
+                con.close()
+                messagebox.showinfo("success","You have been successfully registered",parent=self.root2)
+                self.clear_data()
+
+            except:
+                print('error')
+                pass
+
+    def login_window(self):
+        self.root2.destroy()
+        login_page.Login(Toplevel())
+
+
+

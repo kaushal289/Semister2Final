@@ -3,11 +3,11 @@ from PIL import ImageTk, Image
 
 
 class MainPage:
-    def __init__(self):
-        self.root = Tk()
-        self.root.title("Main")
-        self.root.state('zoomed')
-        self.my_canvas = Canvas(self.root)
+    def __init__(self,master):
+        self.root3 = master
+        self.root3.title("Main")
+        self.root3.state('zoomed')
+        self.my_canvas = Canvas(self.root3)
         self.my_canvas.pack(fill="both", expand=True)
         self.background = ImageTk.PhotoImage(Image.open('background.png'))
         self.my_canvas.create_image(0, 0, image=self.background, anchor="nw")
@@ -15,7 +15,7 @@ class MainPage:
         self.images('room','room1', 'room2', 'room3', 'room4', 200, 10)
         self.buttons()
         self.menu_main_frame()
-        self.root.mainloop()
+        self.root3.mainloop()
     def images(self,file_name,img1,img2,img3,img4,x,y):
         # now set an image for moving
         self.img1 = ImageTk.PhotoImage(Image.open(f"{file_name}/{img1}.png"))  # make sure that you have a photo
@@ -24,7 +24,7 @@ class MainPage:
         self.img3 = ImageTk.PhotoImage(Image.open(f"{file_name}/{img3}.png"))
         self.img4 = ImageTk.PhotoImage(Image.open(f"{file_name}/{img4}.png"))
         # Create a label
-        self.l = Label(self.root, font="bold")
+        self.l = Label(self.root3, font="bold")
         self.l.place(x=x, y=y)
         # take a variable
         self.x = 1
@@ -45,7 +45,7 @@ class MainPage:
         # now increase the count by one
         self.x += 1
         # set images to work automatically by "after" feature in tkinter
-        self.root.after(2000, self.move)
+        self.root3.after(2000, self.move)
     def buttons(self):
         self.menu_img = ImageTk.PhotoImage(Image.open('menu.png'))
         self.menu_change_img = ImageTk.PhotoImage(Image.open('menu_change.png'))
@@ -59,31 +59,31 @@ class MainPage:
         self.setting_change_img = ImageTk.PhotoImage(Image.open('setting_change.png'))
 
 
-        self.menu_btn= Button(self.root, text="      MENU", fg="white",image=self.menu_change_img,
+        self.menu_btn= Button(self.root3, text="      MENU", fg="white",image=self.menu_change_img,
                                    font=("Rockwell nova", 20,'bold'),
                                    cursor="hand2",borderwidth=0,
                                    border='0', overrelief="sunken",compound=CENTER,command=self.menu_main_frame)
         self.menu_btn.place(x=30,y=150)
-        self.details_btn = Button(self.root, text="   DETAILS", fg="white", image=self.details_img,
+        self.details_btn = Button(self.root3, text="   DETAILS", fg="white", image=self.details_img,
                                font=("Rockwell nova", 20, 'bold'),
                                cursor="hand2", borderwidth=0,
                                border='0', overrelief="sunken", compound=CENTER, command=self.fn_details)
         self.details_btn.place(x=30, y=250)
 
 
-        self.about_btn = Button(self.root, text="ABOUT US", fg="white", image=self.about_img,
+        self.about_btn = Button(self.root3, text="ABOUT US", fg="white", image=self.about_img,
                                font=("Rockwell nova", 20,'bold'),
                                cursor="hand2", borderwidth=0,
                                border='0', overrelief="sunken", compound=CENTER,command=lambda:self.fn_about())
         self.about_btn.place(x=30, y=350)
 
-        self.profile_btn = Button(self.root, text="PROFILE", fg="white", image=self.profile_img,
+        self.profile_btn = Button(self.root3, text="PROFILE", fg="white", image=self.profile_img,
                                   font=("Rockwell nova", 20,'bold'),
                                   cursor="hand2", borderwidth=0,
                                   border='0', overrelief="sunken", compound=CENTER,command=lambda:self.fn_profile())
         self.profile_btn.place(x=30, y=450)
 
-        self.setting_btn = Button(self.root, text="   SETTING", fg="white", image=self.setting_img,
+        self.setting_btn = Button(self.root3, text="   SETTING", fg="white", image=self.setting_img,
                                font=("Rockwell nova", 20,'bold'),
                                cursor="hand2", borderwidth=0,
                                border='0', overrelief="sunken", compound=CENTER,command=lambda:self.fn_setting())
@@ -92,7 +92,7 @@ class MainPage:
 
     def menu_main_frame(self):
         self.name_fn='menu'
-        self.frame_main = LabelFrame(self.root, height=550, width=1050, borderwidth=10)
+        self.frame_main = LabelFrame(self.root3, height=550, width=1050, borderwidth=10)
         self.frame_main.place(x=300, y=130)
         self.frame_main.pack_propagate(False)
         self.menu_sub_frame(0, 0, 0)
@@ -118,7 +118,7 @@ class MainPage:
         else:
             self.my_canvas1.create_text(150, 30, text='PICK UP',font=("Algerian", 40,'bold'))
     def fn_details(self):
-        self.frame_details = LabelFrame(self.root, height=550, width=1050, borderwidth=10)
+        self.frame_details = LabelFrame(self.root3, height=550, width=1050, borderwidth=10)
         self.frame_details.place(x=300, y=130)
         self.topic=Label(self.frame_details,text='DETAILS',font=("Rockwell nova", 30,'bold'))
         self.topic.place(x=420,y=30)
@@ -128,7 +128,7 @@ class MainPage:
 
         self.img_change()
     def fn_about(self):
-        self.frame_about = LabelFrame(self.root, height=550, width=1050, borderwidth=10)
+        self.frame_about = LabelFrame(self.root3, height=550, width=1050, borderwidth=10)
         self.frame_about.place(x=300, y=130)
         self.topic = Label(self.frame_about, text='ABOUT US', font=("Rockwell nova", 30, 'bold'))
         self.topic.place(x=420, y=30)
@@ -136,14 +136,14 @@ class MainPage:
 
         self.img_change()
     def fn_profile(self):
-        self.frame_profile = LabelFrame(self.root, height=550, width=1050, borderwidth=10)
+        self.frame_profile = LabelFrame(self.root3, height=550, width=1050, borderwidth=10)
         self.frame_profile.place(x=300, y=130)
         self.topic = Label(self.frame_profile, text='YOUR PROFILE', font=("Rockwell nova", 30, 'bold'))
         self.topic.place(x=420, y=30)
         self.name_fn='profile'
         self.img_change()
     def fn_setting(self):
-        self.frame_setting = LabelFrame(self.root, height=550, width=1050, borderwidth=10)
+        self.frame_setting = LabelFrame(self.root3, height=550, width=1050, borderwidth=10)
         self.frame_setting.place(x=300, y=130)
         self.topic = Label(self.frame_setting, text='SETTING', font=("Rockwell nova", 30, 'bold'))
         self.topic.place(x=420, y=30)
@@ -184,4 +184,4 @@ class MainPage:
             self.profile_btn.config(image=self.profile_img, fg='white')
             self.setting_btn.config(image=self.setting_change_img, fg='green')
 
-MainPage()
+MainPage(Tk())

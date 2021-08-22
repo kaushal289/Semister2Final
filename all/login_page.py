@@ -64,7 +64,6 @@ class Login:
         self.password_entry.bind("<FocusOut>", self.on_leave1)
         self.password_entry.insert(0, "Enter Password Here")
         self.root1.mainloop()
-
     def register_window(self):
         self.root1.withdraw()
         registration_page.Register(Toplevel())
@@ -140,6 +139,3 @@ class Login:
         self.my_canvas.create_line(x + c, y + h, x + w - c, y + h, fill="black", width=10)
         self.my_canvas.create_line(x, y + c, x, y + h - c, fill="black", width=10)
         self.my_canvas.create_line(x + w, y + c, x + w, y + h - c, fill="black", width=10)
-
-
-

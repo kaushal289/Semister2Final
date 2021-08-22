@@ -1,7 +1,7 @@
 from tkinter import *
 from PIL import ImageTk, Image
 from time import sleep
-
+import  custom_burger
 
 class MainPage:
     def __init__(self,master):
@@ -10,15 +10,12 @@ class MainPage:
         self.root3.state('zoomed')
         self.my_canvas = Canvas(self.root3)
         self.my_canvas.pack(fill="both", expand=True)
-
         self.background = ImageTk.PhotoImage(Image.open('background.png'),master=self.root3)
         self.my_canvas.create_image(0, 0, image=self.background, anchor="nw")
         self.ace_images()
         self.buttons()
         self.menu_main_frame()
-
         self.root3.update()
-
         self.root3.mainloop()
     def ace_images(self):
         # now set an image for moving
@@ -106,16 +103,9 @@ class MainPage:
         self.profile_btn.config(image=self.profile_img, fg='white')
         self.setting_btn.config(image=self.setting_img, fg='white')
 
-
-
         self.frame_main = LabelFrame(self.root3, height=550, width=1040, borderwidth=10)
         self.frame_main.place(x=300, y=130)
         self.frame_main.pack_propagate(False)
-
-
-
-
-
 
 
         self.frame_room = LabelFrame(self.frame_main, height=530, width=340, borderwidth=10)
@@ -141,7 +131,13 @@ class MainPage:
         self.frame_food.bind("<Enter>", self.change_food)
         self.frame_food.bind("<Leave>", self.change_back_food)
         self.topic_food = Label(self.frame_food, text='FOOD', font=("Algerian", 40, 'bold'))
-        self.topic_food.place(x=90, y=5)
+        self.topic_food.place(x=90, y=50)
+        self.point_img1 = ImageTk.PhotoImage(Image.open(f'point.png'), master=self.root3)
+        self.my_canvas_food.create_image(130, 140, image=self.point_img1, anchor="nw")
+        self.food_btn = Button(self.frame_food, text="ORDER HERE", bg="green", fg="white", cursor="hand2",
+                              font=("Rockwell nova", 25, 'bold'), command=self.burgar)
+        self.food_btn.place(x=50, y=210)
+
 
 
         self.frame_cab = LabelFrame(self.frame_main, height=530, width=340, borderwidth=10)
@@ -178,7 +174,8 @@ class MainPage:
         self.cab_close = ImageTk.PhotoImage(Image.open(f'cab/cab1.png'),master=self.root3)
         self.my_canvas_cab.create_image(75, 320, image=self.cab_close, anchor="nw")
 
-
+    def burgar(self):
+        custom_burger.CustomBurger()
 
 
     def fn_details(self):
@@ -264,14 +261,12 @@ class MainPage:
             self.root3.update_idletasks()
     def cab_fn(self):
         self.frame_main.place_forget()
-        self.frame_cab = LabelFrame(self.root3, height=550, width=1040, borderwidth=0)
-        self.frame_cab.place(x=300, y=130)
-
-
-
+        self.frame_cab_in = LabelFrame(self.root3, height=550, width=1040, borderwidth=0)
+        self.frame_cab_in.place(x=300, y=130)
+        self.frame_cab_in.pack_propagate(False)
+        self.my_canvas_cab_in = Canvas(self.frame_cab_in)
+        self.my_canvas_cab_in.pack(fill="both", expand=True)
         self.cab_bg_img=ImageTk.PhotoImage(Image.open(f'cab_bg.png'),master=self.root3)
-        self.cab_lbl=Label(self.frame_cab,image=self.cab_bg_img)
-        self.cab_lbl.place(x=0,y=0)
-
-
+        self.my_canvas_cab_in.create_image(0, 0, image=self.cab_bg_img, anchor="nw")
+        self.my_canvas_cab_in.create_text(450,100,text="BOOK A TAXI", font=("Algerian", 45),fill="white")
 MainPage(Tk())

@@ -268,5 +268,26 @@ class MainPage:
         self.my_canvas_cab_in.pack(fill="both", expand=True)
         self.cab_bg_img=ImageTk.PhotoImage(Image.open(f'cab_bg.png'),master=self.root3)
         self.my_canvas_cab_in.create_image(0, 0, image=self.cab_bg_img, anchor="nw")
-        self.my_canvas_cab_in.create_text(450,100,text="BOOK A TAXI", font=("Algerian", 45),fill="white")
+        self.my_canvas_cab_in.create_text(450,80,text="BOOK A TAXI", font=("Algerian", 45),fill="white")
+        self.my_canvas_cab_in.create_text(230, 150, text="Pick up address:", font=("Times new roman", 20), fill="white")
+        self.my_canvas_cab_in.create_text(230, 250, text="Drop off  address:", font=("Times new roman", 20), fill="white")
+        self.my_canvas_cab_in.create_text(250, 200, text="Pick up Date:", font=("Times new roman", 20), fill="white")
+        self.my_canvas_cab_in.create_text(250, 300, text="Drop off Date:",font=("Times new roman", 20), fill="white")
+
+        self.pick_ent=Entry(self.frame_cab_in,bg="#05035b",fg="white",font=("Times new roman", 20),width=15)
+        self.pick_ent.place(x=350,y=130)
+        self.pick_dat = Entry(self.frame_cab_in,bg="#05035b",fg="white", font=("Times new roman", 20), width=15)
+        self.pick_dat.place(x=350, y=180)
+        self.pick_btn = Button(self.frame_cab_in,text="Book",bg="green",fg="white", font=("Times new roman", 18,'bold'))
+        self.pick_btn.place(x=580, y=160)
+
+
+        self.drop_ent = Entry(self.frame_cab_in,bg="#05035b",fg="white", font=("Times new roman", 20), width=15)
+        self.drop_ent.place(x=350, y=230)
+        self.drop_dat = Entry(self.frame_cab_in,bg="#05035b",fg="white", font=("Times new roman", 20), width=15)
+        self.drop_dat.place(x=350, y=280)
+        self.drop_btn = Button(self.frame_cab_in, text="Book", bg="green", fg="white", font=("Times new roman", 18,'bold'))
+        self.drop_btn.place(x=580, y=255)
+
+
 MainPage(Tk())

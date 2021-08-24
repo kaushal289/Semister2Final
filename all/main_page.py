@@ -2,7 +2,7 @@ from tkinter import *
 from PIL import ImageTk, Image
 from time import sleep
 import  custom_burger
-
+import room
 class MainPage:
     def __init__(self,master):
         self.root3 = master
@@ -118,7 +118,14 @@ class MainPage:
         self.frame_room.bind("<Enter>", self.change_room)
         self.frame_room.bind("<Leave>", self.change_back_room)
         self.topic_room = Label(self.frame_room, text='ROOM', font=("Algerian", 40, 'bold'))
-        self.topic_room.place(x=90, y=5)
+        self.topic_room.place(x=90, y=50)
+        self.point_img2 = ImageTk.PhotoImage(Image.open(f'point.png'), master=self.root3)
+        self.my_canvas_room.create_image(130, 140, image=self.point_img2, anchor="nw")
+
+        self.room_btn = Button(self.frame_room, text="BOOK HERE", bg="green", fg="white", cursor="hand2",
+                              font=("Rockwell nova", 25, 'bold'), command=self.room_fn)
+        self.room_btn.place(x=50, y=210)
+
 
 
         self.frame_food = LabelFrame(self.frame_main, height=530, width=340, borderwidth=10)
@@ -173,7 +180,8 @@ class MainPage:
     def change_back_cab(self,g):
         self.cab_close = ImageTk.PhotoImage(Image.open(f'cab/cab1.png'),master=self.root3)
         self.my_canvas_cab.create_image(75, 320, image=self.cab_close, anchor="nw")
-
+    def room_fn(self):
+        room.Roompage(Toplevel())
     def burgar(self):
         custom_burger.CustomBurger()
 
@@ -288,6 +296,3 @@ class MainPage:
         self.drop_dat.place(x=350, y=280)
         self.drop_btn = Button(self.frame_cab_in, text="Book", bg="green", fg="white", font=("Times new roman", 18,'bold'))
         self.drop_btn.place(x=580, y=255)
-
-
-MainPage(Tk())

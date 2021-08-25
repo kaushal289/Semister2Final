@@ -134,6 +134,7 @@ class Login:
                                   width=10)
 
 
+
         self.my_canvas.create_arc(x + w - 2 * c, y, x + w, y + 2 * c, start=0, extent=90, style="arc", width=10)
         self.my_canvas.create_arc(x, y + h - 2 * c, x + 2 * c, y + h, start=180, extent=90, style="arc", width=10)
         self.my_canvas.create_line(x + c, y, x + w - c, y, fill="black", width=10)

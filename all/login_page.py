@@ -4,8 +4,6 @@ from PIL import ImageTk, Image
 from tkinter import messagebox
 import mysql.connector
 import main_page
-import registration_page
-
 
 class Login:
     def __init__(self,master):
@@ -83,6 +81,7 @@ class Login:
                 cur = con.cursor()
                 cur.execute("select * from registration where email=%s and password=%s", (self.username_entry.get(),self.password_entry.get()))
                 row = cur.fetchone()
+                print(row)
                 if self.username_entry.get()=='admin' and self.password_entry.get()=='admin' and self.var123.get()==2:
                     messagebox.showinfo("Success", "Successful login", parent=self.root1)
                     self.root1.withdraw()
@@ -95,6 +94,8 @@ class Login:
                 elif row!=None and self.var123.get()==1:
                     messagebox.showinfo("Success","Successful login",parent=self.root1)
                     self.root1.withdraw()
+                    global usname
+                    usname = self.username_entry.get()
                     main_page.MainPage(Toplevel())
                 elif row!=None and self.var123.get()==2:
                     messagebox.showerror("Error", "Select currect authority", parent=self.root1)
@@ -118,8 +119,6 @@ class Login:
         if self.password_entry.get()=="":
             self.password_entry.config(show="")
             self.password_entry.insert(0,"Enter Password Here")
-
-
     def change(self,e):
         self.login_btn_img1=PhotoImage(file='out.png',master=self.root1)
         self.login_btn.config(image=self.login_btn_img1,borderwidth=0)
@@ -133,9 +132,17 @@ class Login:
         self.my_canvas.create_arc(x, y, x + 2 * c, y + 2 * c, start=90, extent=90, style="arc", width=10)
         self.my_canvas.create_arc(x + w - 2 * c, y + h - 2 * c, x + w, y + h, start=270, extent=90, style="arc",
                                   width=10)
+
+
         self.my_canvas.create_arc(x + w - 2 * c, y, x + w, y + 2 * c, start=0, extent=90, style="arc", width=10)
         self.my_canvas.create_arc(x, y + h - 2 * c, x + 2 * c, y + h, start=180, extent=90, style="arc", width=10)
         self.my_canvas.create_line(x + c, y, x + w - c, y, fill="black", width=10)
         self.my_canvas.create_line(x + c, y + h, x + w - c, y + h, fill="black", width=10)
         self.my_canvas.create_line(x, y + c, x, y + h - c, fill="black", width=10)
         self.my_canvas.create_line(x + w, y + c, x + w, y + h - c, fill="black", width=10)
+
+def gett():
+    return usname
+
+
+

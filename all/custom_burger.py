@@ -5,7 +5,7 @@ from PIL import ImageTk, Image
 
 class CustomBurger:
     def __init__(self):
-        self.root=Toplevel()
+        self.root=Tk()
         self.root.config(bg="black")
         self.root.title("Custom Loader")
         self.root.state('zoomed')
@@ -30,7 +30,6 @@ class CustomBurger:
         self.root.update()
         self.root.mainloop()
     def main_frame_fn(self):
-
         self.frame_main = LabelFrame(self.root, height= self.root.winfo_screenheight(), width=self.root.winfo_screenwidth())
         self.frame_main.place(x=0, y=0)
         self.frame_main.pack_propagate(False)
@@ -58,6 +57,11 @@ class CustomBurger:
         self.btn_top_p=Button(self.frame_main,text="\n \n \nStart making",cursor="hand2",
                            font=("Algerian", 40, 'bold'),compound=CENTER,fg="white",image=self.btn_fire,borderwidth=10,command=self.burger_buttom)
         self.btn_top_p.place(x=100,y=300)
+        self.btn_fire_pizza = ImageTk.PhotoImage(Image.open(f'firepizza.png'))
+        self.btn_pizza = Button(self.frame_main, text="\n \n \nStart making", cursor="hand2",
+                                font=("Algerian", 40, 'bold'), compound=CENTER, fg="white", image=self.btn_fire_pizza,
+                                borderwidth=10, command=self.burger_buttom)
+        self.btn_pizza.place(x=770, y=300)
 
     def reset(self):
         self.a = 550
@@ -125,8 +129,8 @@ class CustomBurger:
 
         self.my_canvas_bur.create_line(1020, 140, 1020, 440, width=5, fill="black")
         self.my_canvas_bur.create_rectangle(730, 140, 1300, 440, width=5)
-        self.my_canvas_bur.create_text(840, 170, text="Vage", font=("Algerian", 30, 'bold'), fill="black")
-        self.my_canvas_bur.create_text(1130, 170, text="Non-vage", font=("Algerian", 30, 'bold'), fill="black")
+        self.my_canvas_bur.create_text(840, 170, text="Veg", font=("Algerian", 30, 'bold'), fill="black")
+        self.my_canvas_bur.create_text(1130, 170, text="Non-veg", font=("Algerian", 30, 'bold'), fill="black")
         self.my_canvas_bur.create_text(980, 170, text="(Price)", font=("Areal", 15, 'bold'), fill="black")
         self.my_canvas_bur.create_text(1265, 170, text="(Price)", font=("Areal", 15, 'bold'), fill="black")
 
@@ -661,3 +665,4 @@ class CustomBurger:
             self.btn_spinach.config(text="Spinach:No", bg="black",fg="red4")
             self.login7 = ImageTk.PhotoImage(Image.open(f'remove.png'))
             self.my_canvas_bur.create_image(self.b, self.a, image=self.login7, anchor="nw")
+CustomBurger()

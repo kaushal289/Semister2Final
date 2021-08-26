@@ -13,6 +13,8 @@ class MainPage:
         self.my_canvas = Canvas(self.root3)
         self.my_canvas.pack(fill="both", expand=True)
 
+
+
         self.background = ImageTk.PhotoImage(Image.open('background.png'),master=self.root3)
         self.male = ImageTk.PhotoImage(Image.open('male.png'), master=self.root3)
         self.female = ImageTk.PhotoImage(Image.open('female.png'), master=self.root3)

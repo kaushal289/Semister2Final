@@ -12,17 +12,12 @@ class MainPage:
         self.root3.state('zoomed')
         self.my_canvas = Canvas(self.root3)
         self.my_canvas.pack(fill="both", expand=True)
-
-
-
         self.background = ImageTk.PhotoImage(Image.open('background.png'),master=self.root3)
         self.male = ImageTk.PhotoImage(Image.open('male.png'), master=self.root3)
         self.female = ImageTk.PhotoImage(Image.open('female.png'), master=self.root3)
-
         self.my_canvas.create_image(0, 0, image=self.background, anchor="nw")
         self.ace_images()
         self.buttons()
-
         self.menu_main_frame()
         self.gender_part()
         self.result=self.convertTuple(self.row1)
@@ -37,8 +32,6 @@ class MainPage:
             self.Mrs = Label(self.root3, text='Miss', font=("Rockwell nova", 40, 'bold'), fg="Green")
             self.Mrs.place(x=1000, y=10)
             self.my_canvas.create_image(900, 10, image=self.female, anchor="nw")
-
-
         self.root3.update()
         self.root3.mainloop()
 

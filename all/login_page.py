@@ -89,6 +89,7 @@ class Login:
                 elif self.username_entry.get()=='admin' and self.password_entry.get()=='admin' and self.var123.get()==1:
                     print(self.var123.get())
                     messagebox.showerror("Error", "Select currect authority", parent=self.root1)
+
                 elif row==None:
                     messagebox.showerror("Error","Invalid username and password",parent=self.root1)
                 elif row!=None and self.var123.get()==1:
